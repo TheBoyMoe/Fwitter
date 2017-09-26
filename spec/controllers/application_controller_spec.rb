@@ -11,7 +11,6 @@ describe ApplicationController do
   end
 
   describe "Signup Page" do
-
     it 'loads the signup page' do
       get '/signup'
       expect(last_response.status).to eq(200)
@@ -59,15 +58,8 @@ describe ApplicationController do
 
     it 'does not let a logged in user view the signup page' do
       user = User.create(:username => "skittles123", :email => "skittles@aol.com", :password => "rainbows")
-      params = {
-        :username => "skittles123",
-        :email => "skittles@aol.com",
-        :password => "rainbows"
-      }
-      post '/signup', params
-      session = {}
-      session[:user_id] = user.id
-      get '/signup'
+      get '/signup', {}, { 'rack.session' => { user_id: user.id } }
+
       expect(last_response.location).to include('/tweets')
     end
   end

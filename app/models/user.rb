@@ -3,11 +3,11 @@ class User < ActiveRecord::Base
   has_secure_password
 
   #causes controller tests to fail line 60
-  # validates :username, uniqueness: true
-  # validates :username, presence: true
-  # validates :email, uniqueness: true
-  # validates :email, presence: true
-  # validates :password, presence: true
+  validates :username, uniqueness: true
+  validates :username, presence: true
+  validates :email, uniqueness: true
+  validates :email, presence: true
+  validates :password, presence: true
 
   def slug
     self.username.downcase.gsub(' ', '-')
